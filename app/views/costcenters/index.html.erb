@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  
+  <h1 class="h2 display-6">Centros de Custo</h1>
+
+  <p style="color: green"><%= notice %></p>
+
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <%= link_to "Novo Centro de Custo", new_costcenter_path, class: "btn btn-sm btn-outline-secondary" %>
+  </div>
+</div>
+
+
+<div id="costcenters" class="table-responsive">
+    <table class="table table-hover table-striped table-sm">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Filial</th>
+          <th scope="col">Serviço</th>
+          <th scope="col">Status</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+      <%  @costcenters.each do |costcenter| %>
+        <tr>
+          <td><%= costcenter.id %></td>
+          <td><%= costcenter.name %></td>
+          <td><%= costcenter.branch.name %></td>
+          <td><%= costcenter.service.name %></td>
+          <td><% if (costcenter.status == true)  %>
+                ATIVO
+              <% else %>
+                INATIVO
+              <% end %>
+          </td>
+          <td><%= link_to edit_costcenter_path(costcenter) do %>
+                <i class="fa-solid fa-file-pen align-middle"></i>
+              <% end %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+</div>

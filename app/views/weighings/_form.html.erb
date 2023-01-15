@@ -1,0 +1,31 @@
+  <%= bootstrap_form_with(model: weighing) do |f| %>
+
+    <%= f.collection_select :user_id, User.where(id: current_user.id), :id, :username, label: "Usuário" %>
+
+    <%= f.collection_select :branch_id, Branch.where(status: true).joins(:users).where(users: {id: current_user.id}), :id, :name, label: "Filial", prompt: "- SELECIONE A FILIAL -" %>
+
+    <%= f.collection_select :costcenter_id, Costcenter.where(status: true, branch_id: Branch.where(status: true).joins(:users).where(users: {id: current_user.id})), :id, :name, label: "Centro de Custo" %>
+
+    <%= f.collection_select :employee_id, Employee.where(status: true).joins(:costcenters).where(costcenters: {id: Costcenter.where(status: true, branch_id: Branch.where(status: true).joins(:users).where(users: {id: current_user.id}))}), :id, :name, label: "Motorista" %>
+
+    <%= f.collection_select :vehicle_id, Vehicle.where(status: true).joins(:costcenters).where(costcenters: {id: Costcenter.where(status: true, branch_id: Branch.where(status: true).joins(:users).where(users: {id: current_user.id}))}), :id, :name, label: "Veículo" %>
+
+    <%= f.collection_select :destino, Destiny.where(status: true), :id, :name, label: "Destino" %>
+
+    <%= f.date_field :dia, label: "Data", required: true %>
+
+    <%= f.time_field :hora, label: "Hora", required: true %>
+
+    <%= f.text_field :numbercupom, label: "Número do Cupom", required: true %>
+
+    <%= f.text_field :weight_in, label: "Peso Entrada", required: true %>
+
+    <%= f.text_field :weight_out, label: "Peso Saída", required: true %>
+
+    <%= f.file_field :coupon, label: "Cupom", required: true %>
+
+    <%= f.submit "Salvar"%>
+
+    <%= link_to "Cancelar", weighings_path, class:"btn btn-danger" %>
+
+  <% end %>

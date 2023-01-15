@@ -1,0 +1,9 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @weighing %>
+
+<div>
+  <%= link_to "Editar", edit_weighing_path(@weighing) %> |
+  <%= link_to "Voltar", weighings_path %>
+  <%= button_to "Deletar", @weighing, method: :delete %>
+</div>

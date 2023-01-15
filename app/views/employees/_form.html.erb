@@ -1,0 +1,17 @@
+<div class="col-12 card p-3 class">
+  <%= bootstrap_form_with(model: employee) do |f| %>
+
+    <%= f.text_field :name, label: "Nome", oninput: "this.value = this.value.toUpperCase()", required: true %>
+    <%= f.check_box :status, label: "Status Ativo?" %>
+
+    <div class="container">
+      <%= f.collection_check_boxes :costcenter_ids, Costcenter.where(status: true), :id, :name, label: "Centro de Custo" %>
+    </div>
+    
+    <%= f.submit "Salvar" %>
+
+    <%= link_to "Cancelar", employees_path, class:"btn btn-danger" %>
+      
+  <% end %>
+
+</div>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>ANSUS - Autenticação</title>
+  </head>
+  <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
+    <main class="d-flex w-100">
+      <div class="container d-flex flex-column">
+        <div class="row vh-100">
+          <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+            <div class="d-table-cell align-middle">
+              <div class="text-center mt-3">
+                <h1 class="h3">Bem Vindo a Ansus Serviços Ltda.</h1>
+                <p class="lead">
+                  Informe seus dados para entrar em sua conta.
+                </p>
+              </div>
+              <div class="card">
+                <div class="card-body">
+                  <div class="m-sm-5">
+                    <div class="text-center">
+                      <%= image_tag 'ansus.png',  alt: "ANSUS", class: "img-fluid" %>
+                    </div>
+                    <%= yield %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

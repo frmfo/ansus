@@ -1,0 +1,13 @@
+<div class="col-12 card p-3 class">
+
+  <%= bootstrap_form_with(model: branch) do |f| %>
+
+    <%= f.text_field :name, label: "Nome:" ,oninput: "this.value = this.value.toUpperCase()", required: true %>
+    <%= f.collection_select :company_id, Company.where(status: true), :id, :brand %>
+    <%= f.check_box :status, label: "Status Ativo?" %>
+    <%= f.submit "Salvar"%>
+
+    <%= link_to "Cancelar", branches_path, class:"btn btn-danger" %>
+
+  <% end %>
+</div>

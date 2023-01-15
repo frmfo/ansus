@@ -1,0 +1,13 @@
+<div class="col-12 card p-3 class">
+  <%= bootstrap_form_with(model: costcenter) do |f| %>
+
+    <%= f.text_field :name, label: "Nome", oninput: "this.value = this.value.toUpperCase()", required: true %>
+    <%= f.collection_select :branch_id, Branch.where(status: true), :id, :name, label: "Filial" %>
+    <%= f.collection_select :service_id, Service.where(status: true), :id, :name, label: "Serviço" %>
+    <%= f.check_box :status, label: "Status Ativo?" %>
+    <%= f.submit "Salvar" %>
+
+    <%= link_to "Cancelar", costcenters_path, class:"btn btn-danger" %>
+    
+  <% end %>
+</div>

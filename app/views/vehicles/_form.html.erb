@@ -1,0 +1,21 @@
+<div class="col-12 card p-3 class">
+  <%= bootstrap_form_with(model: vehicle, html: { data: { controller: "masks" } }) do |f| %>
+
+    <%= f.number_field :fleet, label: "Número da Frota:" %>
+    <%= f.text_field :name, label: "Nome:", oninput: "this.value = this.value.toUpperCase()", required: true %>
+    <%= f.text_field :brand, label: "Marca:",oninput: "this.value = this.value.toUpperCase()", required: true  %>
+    <%= f.text_field :plate, label: "Placa:",data: { masks_target: 'plate' }, required: true %>
+    <%= f.check_box :status, label: "Status Ativo?" %>
+
+    <div class="container">
+      <%= f.collection_check_boxes :costcenter_ids, Costcenter.where(status: true), :id, :name, label: "Centro de Custo" %>
+    </div>
+
+    <br>
+    
+    <%= f.submit "Salvar"%>
+
+    <%= link_to "Cancelar", vehicles_path, class:"btn btn-danger" %>
+  
+  <% end %>
+</div>

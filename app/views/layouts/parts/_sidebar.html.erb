@@ -1,0 +1,104 @@
+<nav id="sidebar" class="sidebar js-sidebar">
+  <div class="sidebar-content js-simplebar">
+    <div class="sidebar-brand">
+      <%= image_tag "ansus_small.png", class: "avatar img-fluid rounded me-1" %>
+      <span class="align-middle">AnsusWEB</span>
+    </div>
+    <ul class="sidebar-nav">
+      <li class="sidebar-header">
+        Painel
+      </li>
+      <li class="sidebar-item <%= 'active' if current_page?(root_path) %>">
+        <%= link_to root_path, class: "sidebar-link" do %>
+          <i class="fa fa-gauge-high align-middle"></i>
+          <span class="align-middle">Dashboard</span>
+        <%end%>
+      </li>
+      <li class="sidebar-header">
+        Operações
+      </li>
+      <li class="sidebar-item <%= 'active' if current_page?(weighings_path) %>">
+        <% if current_user.admin? || current_user.has_role?(:pesagem)%>
+          <%= link_to weighings_path, class: "sidebar-link" do %>
+            <i class="fa-solid fa-weight-hanging align-middle"></i>
+            <span class="align-middle">Pesagens</span>
+          <%end%>
+        <% end %>
+      </li>
+      <li class="sidebar-header">
+        <% if current_user.admin? || current_user.has_role?(:administrador)%>
+          Cadastros Básicos
+        <% end %>
+      </li>
+      <li class="sidebar-item <%= 'active' if current_page?(companies_path) %>">
+        <% if current_user.admin? || current_user.has_role?(:administrador)%>
+          <%= link_to companies_path, class: "sidebar-link" do %>
+            <i class="fa-solid fa-city align-middle"></i>
+            <span class="align-middle">Empresas</span>
+          <%end%>
+        <% end %>
+      </li>
+      <li class="sidebar-item <%= 'active' if current_page?(branches_path) %>">
+        <% if current_user.admin? || current_user.has_role?(:administrador)%>
+          <%= link_to branches_path, class: "sidebar-link" do %>
+            <i class="fa-solid fa-building-un align-middle"></i>
+            <span class="align-middle">Filiais</span>
+          <%end%>
+        <% end %>
+      </li>
+      <li class="sidebar-item <%= 'active' if current_page?(services_path) %>">
+        <% if current_user.admin? || current_user.has_role?(:administrador)%>
+          <%= link_to services_path, class: "sidebar-link" do %>
+            <i class="fa-solid fa-person-digging align-middle"></i>
+            <span class="align-middle">Serviços</span>
+          <%end%>
+        <% end %>
+      </li>
+      <li class="sidebar-item <%= 'active' if current_page?(costcenters_path) %>">
+        <% if current_user.admin? || current_user.has_role?(:administrador)%>
+          <%= link_to costcenters_path, class: "sidebar-link" do %>
+            <i class="fa-solid fa-circle-dollar-to-slot align-middle"></i>
+            <span class="align-middle">Centros de Custo</span>
+          <%end%>
+        <% end %>
+      </li>
+      <li class="sidebar-item <%= 'active' if current_page?(destinies_path) %>">
+        <% if current_user.admin? || current_user.has_role?(:administrador)%>
+          <%= link_to destinies_path, class: "sidebar-link" do %>
+            <i class="fa-solid fa-right-left align-middle"></i>
+            <span class="align-middle">Destinos</span>
+          <%end%>
+        <% end %>
+      </li>
+      <li class="sidebar-item <%= 'active' if current_page?(vehicles_path) %>">
+        <% if current_user.admin? || current_user.has_role?(:administrador)%>
+          <%= link_to vehicles_path, class: "sidebar-link" do %>
+            <i class="fa-solid fa-truck-field align-middle"></i>
+            <span class="align-middle">Veículos</span>
+          <%end%>
+        <% end %>
+      </li>
+      <li class="sidebar-item <%= 'active' if current_page?(employees_path) %>">
+        <% if current_user.admin? || current_user.has_role?(:administrador)%>
+          <%= link_to employees_path, class: "sidebar-link" do %>
+            <i class="fa-solid fa-people-group align-middle"></i>
+            <span class="align-middle">Funcionários</span>
+          <%end%>
+        <% end %>
+      </li>
+      <li class="sidebar-header">
+        <% if current_user.admin? || current_user.has_role?(:administrador)%>
+          Configurações
+        <% end %>
+      </li>
+      <li class="sidebar-item <%= 'active' if current_page?(users_path) %>">
+        <% if current_user.admin? || current_user.has_role?(:administrador)%>
+          <%= link_to users_path, class: "sidebar-link" do %>
+            <i class="fa-regular fa-id-badge align-middle"></i>
+            <span class="align-middle">Usuários</span>
+          <%end%>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+</nav>

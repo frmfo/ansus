@@ -1,0 +1,23 @@
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <div class="mb-2">
+    <label class="form-label">Usuário</label>
+    <%= f.email_field :email, hide_label: true, autofocus: true, placeholder: "Entre com seu e-mail", class: "form-control form-control-md" %>
+  </div>
+  <div class="mb-2">
+    <label class="form-label">Senha</label>
+    <%= f.password_field :password, hide_label: true, placeholder:"Entre com sua senha.", class: "form-control form-control-md" %>
+  </div>
+  <% if devise_mapping.rememberable? %>
+    <div>
+      <label class="form-check">
+        <%= f.check_box :remember_me, checked: false, class: "form-check-input" %>
+        <span class="form-check-label">
+          Lembre-se de mim
+        </span>
+      </label>
+    </div>
+  <% end %>
+  <div class="text-center mt-2">
+    <%= f.submit "Entrar",  class: "btn btn-lg btn-primary"%>
+  </div>
+<% end %>

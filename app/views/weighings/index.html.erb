@@ -1,0 +1,65 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2 display-6">Pesagens</h1>
+  <p style="color: green"><%= notice %></p>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <%= link_to "Nova Pesagem", new_weighing_path, class: "btn btn-sm btn-outline-secondary" %>
+    <%= link_to "Relatórios", weighings_find_by_period_path, class: "btn btn-sm btn-outline-secondary" %>
+  </div>
+</div>
+<div id="companies" class="table-responsive">
+  <table class="table table-hover table-striped table-sm mb-0">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Serviço</th>
+        <th scope="col">Placa</th>
+        <th scope="col">Motorista</th>
+        <th scope="col">Data</th>
+        <th scope="col">Hora</th>
+        <th scope="col">Nº Cupom</th>
+        <th scope="col">Peso Entrada</th>
+        <th scope="col">Peso Saída</th>
+        <th scope="col">Peso Líquido</th>
+        <th scope="col">Ações</th>
+      </tr>
+    </thead>
+    <tbody id="tbweighings">
+      <% @weighings.each do |weighing| %>
+        <tr>
+          <td><%= weighing.id %></td>
+          <td><%= weighing.costcenter.service.name %></td>
+          <td><%= weighing.vehicle.plate %></td>
+          <td><%= weighing.employee.name %></td>
+          <td><%= weighing.dia.strftime("%d/%m/%Y") %></td>
+          <td><%= weighing.hora.strftime("%H:%M") %></td>
+          <td><%= weighing.numbercupom %></td>
+          <td><%= weighing.weight_in.to_s.gsub('.', ',') %></td>
+          <td><%= weighing.weight_out.to_s.gsub('.', ',') %></td>
+          <% if (weighing.weight_in <= weighing.weight_out) %>
+            <td><%= (weighing.weight_out - weighing.weight_in).to_s.gsub('.', ',') %></td>
+          <% else %>
+            <td><%= (weighing.weight_in - weighing.weight_out).to_s.gsub('.', ',') %></td>
+          <% end %>
+          <td>
+            <%= link_to edit_weighing_path(weighing) do %>
+              <i class="fa-solid fa-file-pen align-middle"></i>
+            <% end %>
+            <%= link_to weighing do %>
+              <i class="fa-solid fa-magnifying-glass"></i>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <% if @pagy.next.present? %>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <%= link_to "Próxima Página >>", pagy_url_for(@pagy, @pagy.next), class:"btn btn-primary" %>
+    <% else %>
+      <%= link_to "<< Página Anterior", pagy_url_for(@pagy, @pagy.next), class:"btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

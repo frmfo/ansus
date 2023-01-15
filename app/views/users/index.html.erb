@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2 display-6">Usuários</h1>
+
+  <p style="color: green"><%= notice %></p>
+
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <%= link_to "Novo Usuário", new_user_path, class: "btn btn-sm btn-outline-secondary" %>
+  </div>
+</div>
+
+<div id="weighings" class="table-responsive">
+    <table class="table table-hover table-striped table-sm">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Usuário</th>
+          <th scope="col">E-mail</th>
+          <th scope="col">Administrador?</th>
+          <th scope="col">Role</th>
+          <th scope="col">Filial</th>
+          <th scope="col">Data Cadastro</th>
+          <th scope="col">Data Alteração</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.id %></td>
+          <td><%= user.username %></td>
+          <td><%= user.email %></td>
+          <td><% if (user.admin?)  %>
+                SIM
+              <% else %>
+                NÃO
+              <% end %>
+          </td>
+          <td><%= user.roles.map(&:name).compact.join(", ") %></td>
+          <td><%= user.branches.map(&:name).compact.join(", ") %></td>
+          <td><%= user.created_at.strftime("%d/%m/%Y - %H:%M") %></td>
+          <td><%= user.updated_at.strftime("%d/%m/%Y - %H:%M") %></td>
+          <td><%= link_to edit_user_path(user) do %>
+                <i class="fa-solid fa-user-pen align-middle"></i>
+              <% end %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+</div>

@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @costcenter %>
+
+<div>
+  <%= link_to "Edit this costcenter", edit_costcenter_path(@costcenter) %> |
+  <%= link_to "Back to costcenters", costcenters_path %>
+
+  <%= button_to "Destroy this costcenter", @costcenter, method: :delete %>
+</div>

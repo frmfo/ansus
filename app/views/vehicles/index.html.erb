@@ -1,0 +1,47 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2 display-6">Veículos</h1>
+
+  <p style="color: green"><%= notice %></p>
+
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <%= link_to "Novo Veículo", new_vehicle_path, class: "btn btn-sm btn-outline-secondary" %>
+  </div>
+</div>
+
+<div id="companies" class="table-responsive">
+    <table class="table table-hover table-striped table-sm">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Frota</th>
+          <th scope="col">Placa</th>
+          <th scope="col">Marca</th>
+          <th scope="col">Centro de Custo</th>
+          <th scope="col">Status</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @vehicles.each do |vehicle| %>
+        <tr>
+          <td><%= vehicle.id %></td>
+          <td><%= vehicle.name %></td>
+          <td><%= vehicle.plate %></td>
+          <td><%= vehicle.brand %></td>
+          <td><%= vehicle.costcenters.pluck(:name).to_s.gsub(/\"/, ' ').gsub(/[\[\]]/, '') %></td>
+          <td><% if (vehicle.status == true)  %>
+                ATIVO
+              <% else %>
+                INATIVO
+              <% end %>
+          </td>
+          <td>
+            <%= link_to edit_vehicle_path(vehicle) do%>
+              <i class="fa-solid fa-file-pen align-middle"></i>
+            <% end %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+</div>

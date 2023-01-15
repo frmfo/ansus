@@ -1,0 +1,66 @@
+<div id="<%= dom_id weighing %>">
+  <p>
+    <strong>Usuário:</strong>
+    <%= weighing.user.username %>
+  </p>
+
+  <p>
+    <strong>Filial:</strong>
+    <%= weighing.branch.name %>
+  </p>
+
+  <p>
+    <strong>Centro de Custo:</strong>
+    <%= weighing.costcenter.service.name %>
+  </p>
+
+  <p>
+    <strong>Destino:</strong>
+    <%= Destiny.where(id: weighing.destino).pluck(:name).to_s.gsub(/\"/, ' ').gsub(/[\[\]]/, '') %>
+  </p>
+
+  <p>
+    <strong>Motorista:</strong>
+    <%= weighing.employee.name %>
+  </p>
+
+  <p>
+    <strong>Veículo:</strong>
+    <%= weighing.vehicle.plate %>
+  </p>
+
+  <p>
+    <strong>Dia:</strong>
+    <%= weighing.dia.strftime("%d/%m/%Y") %>
+  </p>
+
+  <p>
+    <strong>Hora:</strong>
+    <%= weighing.hora.strftime("%H:%M") %>
+  </p>
+
+  <p>
+    <strong>Peso Entrada:</strong>
+    <%= weighing.weight_in.to_s.gsub('.', ',') %>
+  </p>
+
+  <p>
+    <strong>Peso Saída:</strong>
+    <%= weighing.weight_out.to_s.gsub('.', ',') %>
+  </p>
+
+  <p>
+    <strong>Peso Líquido:</strong>
+    <% if (weighing.weight_in <= weighing.weight_out) %>
+      <%= (weighing.weight_out - weighing.weight_in).to_s.gsub('.', ',') %>
+    <% else %>
+      <%= (weighing.weight_in - weighing.weight_out).to_s.gsub('.', ',') %>
+    <% end %>
+  </p>
+
+  <p>
+    <strong>Cupom: </strong>
+    <%= image_tag weighing.coupon %></td>
+  </p>
+
+</div>

@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @destiny %>
+
+<div>
+  <%= link_to "Edit this destiny", edit_destiny_path(@destiny) %> |
+  <%= link_to "Back to destinies", destinies_path %>
+
+  <%= button_to "Destroy this destiny", @destiny, method: :delete %>
+</div>

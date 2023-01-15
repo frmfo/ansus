@@ -1,0 +1,76 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2 display-6">Relatório por Período</h1>
+</div>
+
+<h6>Liste as pesagens no intervalo de datas</h6>
+ 
+<%= bootstrap_form_with(url: weighings_find_by_period_path, method: "get") do |f| %>
+  <%= f.collection_select :branch_id, Branch.where(status: true).joins(:users).where(
+    users: {id: current_user.id}), :id, :name, label: "Filial" %>
+  <%= f.collection_select :costcenter_id, Costcenter.where(status: true, 
+     branch_id: Branch.where(status: true).joins(:users).where(users: {id: current_user.id})), 
+     :id, :name, label: "Centro de Custo" %>
+  <%= f.date_field :initial_date, label: "Data Inicial" %>
+  <%= f.date_field :final_date, label: "Data Final" %>
+  <%= f.submit 'Listar', name: nil %>
+  <%= link_to "Gerar Pdf", {controller: 'weighings', action: 'period_report_unit', branch_id: params[:branch_id],
+                            costcenter_id: params[:costcenter_id], initial_date: params[:initial_date], 
+                            final_date: params[:final_date]}, method: 'get', class: "btn btn-secondary" %>
+<% end %>
+ 
+<hr />
+
+<div id="weighings" class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Serviço</th>
+          <th scope="col">Placa</th>
+          <th scope="col">Motorista</th>
+          <th scope="col">Data</th>
+          <th scope="col">Hora</th>
+          <th scope="col">Nº Cupom</th>
+          <th scope="col">Peso Entrada</th>
+          <th scope="col">Peso Saída</th>
+          <th scope="col">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% weight_total = 0%>
+      <% @weighings.each do |weighing| %>
+        <tr>
+          <td><%= weighing.id %></td>
+          <td><%= weighing.costcenter.service.name %></td>
+          <td><%= weighing.vehicle.plate %></td>
+          <td><%= weighing.employee.name %></td>
+          <td><%= weighing.dia.strftime("%d/%m/%Y") %></td>
+          <td><%= weighing.hora.strftime("%H:%M") %></td>
+          <td><%= weighing.numbercupom %></td>
+          <td><%= weighing.weight_in.to_s.gsub('.', ',') %></td>
+          <td><%= weighing.weight_out.to_s.gsub('.', ',') %></td>
+          <% if (weighing.weight_in <= weighing.weight_out) %>
+            <% weight = (weighing.weight_out - weighing.weight_in) %>
+            <td><%= weight.to_s.gsub('.', ',')%></td>
+          <% else %>
+            <% weight = (weighing.weight_in - weighing.weight_out) %>
+            <td><%= weight.to_s.gsub('.', ',')%></td>
+          <% end %>
+          <% weight_total = weight_total + weight%>
+        </tr>
+        <% end %>
+      </tbody>
+      <tbody>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Peso Total:</td>
+        <td><%= weight_total %></td>
+      </tbody>
+    </table>
+</div>
