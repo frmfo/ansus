@@ -31,8 +31,7 @@
   color: $navbar-brand-color;
   display: block;
 
-  svg,
-  .feather {
+  svg {
     color: $navbar-brand-icon-color;
     height: 24px;
     width: 24px;
@@ -60,8 +59,7 @@
     color: $primary;
   }
 
-  svg,
-  .feather {
+  svg {
     width: 20px;
     height: 20px;
   }

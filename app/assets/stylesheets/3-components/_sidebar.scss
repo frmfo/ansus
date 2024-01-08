@@ -9,7 +9,9 @@
 .sidebar-content {
   transition: $sidebar-transition;
   display: flex;
-  height: 100vh;
+  padding-top: 10vh;
+  padding-bottom: 10vh;
+  height: 90vh;
   flex-direction: column;
   background: $sidebar-bg;
 }

@@ -6,13 +6,16 @@ class WeighingsController < ApplicationController
   # GET /weighings or /weighings.json
   def index
     if current_user.admin?
-      @pagy, @weighings = pagy(Weighing.includes(:costcenter, :employee, :vehicle).order(costcenter_id: :asc, dia: :desc, hora: :desc), items: 14)
-
+      @pagy, @weighings = pagy_countless(Weighing.order(dia: :desc,hora: :desc, costcenter_id: :asc), items: 13)
     else
-      @pagy, @weighings = pagy(Weighing.includes(:costcenter, :employee, :vehicle).where(user_id: current_user.id ).order(dia: :desc, hora: :desc), items: 14)
-
+      @pagy, @weighings = pagy_countless(Weighing.where(user_id: current_user.id )
+        .order(dia: :desc,hora: :desc, costcenter_id: :asc), items: 13)
     end
-
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
+    
   end
 
   # GET /weighings/1 or /weighings/1.json
@@ -56,7 +59,7 @@ class WeighingsController < ApplicationController
                          p.hora.strftime("%H:%M"),p.numbercupom,p.weight_in.to_s.gsub('.', ','),p.weight_out.to_s.gsub('.', ','), weight.to_s.gsub('.', ',')]
       end
       table_data << ['','','','','','','','',"Peso Total:", weight_total.to_s.gsub('.', ',')]
-    pdf.table(table_data, :width => 770, :cell_style => { inline_format: true }, header: true)
+    pdf.table(table_data, :width => 770, :cell_style => { inline_format: true, size: 9 }, header: true)
                   
     pdf.number_pages "Gerado em #{(Time.now).strftime("%d/%m/%y as %H:%M")} - Página <page> de <total> ", :start_count_at => 0, :page_filter => :all, :at => [pdf.bounds.right - 180, 7], :align => :right, :size => 8
     
@@ -85,7 +88,7 @@ class WeighingsController < ApplicationController
 
     respond_to do |format|
       if @weighing.save
-        format.html { redirect_to weighing_url(@weighing), notice: "Weighing was successfully created." }
+        format.html { redirect_to weighing_url(@weighing), notice: "Pesagem cadastrada com sucesso." }
         format.json { render :show, status: :created, location: @weighing }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -99,7 +102,7 @@ class WeighingsController < ApplicationController
     respond_to do |format|
       if @weighing.update(weighing_params)
         authorize @weighing
-        format.html { redirect_to weighing_url(@weighing), notice: "Weighing was successfully updated." }
+        format.html { redirect_to weighing_url(@weighing), notice: "Pesagem atualizada com sucesso." }
         format.json { render :show, status: :ok, location: @weighing }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -110,12 +113,18 @@ class WeighingsController < ApplicationController
 
   # DELETE /weighings/1 or /weighings/1.json
   def destroy
-    @weighing.destroy
     authorize @weighing
 
-    respond_to do |format|
-      format.html { redirect_to weighings_url, notice: "Weighing was successfully destroyed." }
-      format.json { head :no_content }
+    if @weighing.destroy
+      respond_to do |format|
+        format.html { redirect_to weighings_path, notice: "O registro foi excluído!" }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to weighings_path, alert: "Falha ao excluir o registro!" }
+        format.json { render json: { error: "Falha ao excluir o registro!" }, status: :unprocessable_entity }
+      end
     end
   end
 

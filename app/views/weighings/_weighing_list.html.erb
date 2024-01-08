@@ -1,0 +1,26 @@
+<% @weighings.each do |weighing| %>
+  <tr>
+    <td><%= weighing.id %></td>
+    <td><%= weighing.costcenter.service.name %></td>
+    <td><%= weighing.vehicle.plate %></td>
+    <td><%= weighing.employee.name %></td>
+    <td><%= weighing.dia.strftime("%d/%m/%Y") %></td>
+    <td><%= weighing.hora.strftime("%H:%M") %></td>
+    <td><%= weighing.numbercupom %></td>
+    <td><%= weighing.weight_in.to_s.gsub('.', ',') %></td>
+    <td><%= weighing.weight_out.to_s.gsub('.', ',') %></td>
+    <% if (weighing.weight_in <= weighing.weight_out) %>
+      <td><%= (weighing.weight_out - weighing.weight_in).to_s.gsub('.', ',') %></td>
+    <% else %>
+      <td><%= (weighing.weight_in - weighing.weight_out).to_s.gsub('.', ',') %></td>
+    <% end %>
+    <td>
+      <%= link_to edit_weighing_path(weighing) do %>
+        <i class="fa-solid fa-file-pen align-middle"></i>
+      <% end %>
+      <%= link_to weighing do %>
+        <i class="fa-solid fa-magnifying-glass"></i>
+      <% end %>
+    </td>
+  </tr>
+<%end%>

@@ -1,66 +1,81 @@
-<div id="<%= dom_id weighing %>">
-  <p>
-    <strong>Usuário:</strong>
-    <%= weighing.user.username %>
-  </p>
-
-  <p>
-    <strong>Filial:</strong>
-    <%= weighing.branch.name %>
-  </p>
-
-  <p>
-    <strong>Centro de Custo:</strong>
-    <%= weighing.costcenter.service.name %>
-  </p>
-
-  <p>
-    <strong>Destino:</strong>
-    <%= Destiny.where(id: weighing.destino).pluck(:name).to_s.gsub(/\"/, ' ').gsub(/[\[\]]/, '') %>
-  </p>
-
-  <p>
-    <strong>Motorista:</strong>
-    <%= weighing.employee.name %>
-  </p>
-
-  <p>
-    <strong>Veículo:</strong>
-    <%= weighing.vehicle.plate %>
-  </p>
-
-  <p>
-    <strong>Dia:</strong>
-    <%= weighing.dia.strftime("%d/%m/%Y") %>
-  </p>
-
-  <p>
-    <strong>Hora:</strong>
-    <%= weighing.hora.strftime("%H:%M") %>
-  </p>
-
-  <p>
-    <strong>Peso Entrada:</strong>
-    <%= weighing.weight_in.to_s.gsub('.', ',') %>
-  </p>
-
-  <p>
-    <strong>Peso Saída:</strong>
-    <%= weighing.weight_out.to_s.gsub('.', ',') %>
-  </p>
-
-  <p>
-    <strong>Peso Líquido:</strong>
-    <% if (weighing.weight_in <= weighing.weight_out) %>
-      <%= (weighing.weight_out - weighing.weight_in).to_s.gsub('.', ',') %>
-    <% else %>
-      <%= (weighing.weight_in - weighing.weight_out).to_s.gsub('.', ',') %>
-    <% end %>
-  </p>
-
-  <p>
-    <strong>Cupom: </strong>
-    <%= image_tag weighing.coupon %></td>
-  </p>
-
+<div id="<%= dom_id weighing %>" class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2 display-6">Pesagem ID: <%= weighing.id %></h1>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <%= link_to "Nova Pesagem", new_weighing_path, class: "btn btn-sm btn-outline-secondary" %>
+    <%= link_to "Editar", edit_weighing_path(@weighing), class: "btn btn-sm btn-outline-secondary" %>
+    <%= link_to "Voltar", weighings_path, class: "btn btn-sm btn-outline-secondary" %>
+    <%= button_to "Deletar", @weighing, method: :delete, form: { data: { turbo_confirm: 'Deseja realmente deletar o registro?' } }, class: "btn btn-sm btn-outline-secondary" %>
+  </div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-4">
+        <label for="inputUsuario" class="form-label"><strong>Usuário:</strong></label>
+        <input type="text" class="form-control" id="inputUsuario" 
+          value="<%= weighing.user.username %>" disabled>
+      </div>
+      <div class="col-md-4">
+        <label for="inputDataCad" class="form-label"><strong>Data de Cadastro:</strong></label>
+        <input type="text" class="form-control" id="inputDataCad" 
+          value="<%= weighing.created_at.strftime("%d/%m/%Y") %>" disabled>
+      </div>
+      <div class="col-md-4">
+        <label for="inputDataUp" class="form-label"><strong>Data de Alteração:</strong></label>
+        <input type="text" class="form-control" id="inputDataUp" 
+          value="<%= weighing.updated_at.strftime("%d/%m/%Y") %>" disabled>
+      </div>
+      <div class="col-md-4">
+        <label for="inputFilial" class="form-label"><strong>Filial:</strong></label>
+        <input type="text" class="form-control" id="inputFilial" 
+          value="<%= weighing.branch.name %>" disabled>
+      </div>
+      <div class="col-md-4">
+          <label for="inputCc" class="form-label"><strong>Centro de Custo:</strong></label>
+          <input type="text" class="form-control" id="inputCc" 
+            value="<%= weighing.costcenter.service.name %>" disabled>
+      </div>
+      <div class="col-md-4">
+          <label for="inputDest" class="form-label"><strong>Destino:</strong></label>
+          <input type="text" class="form-control" id="inputDest" 
+            value="<%= Destiny.where(id: weighing.destino).pluck(:name).to_s.gsub(/\"/, ' ').gsub(/[\[\]]/, '') %>"
+            disabled>
+      </div>
+      <div class="col-md-4">
+          <label for="inputMot" class="form-label"><strong>Motorista:</strong></label>
+          <input type="text" class="form-control" id="inputMot" 
+            value="<%= weighing.employee.name %>" disabled>
+      </div>
+      <div class="col-md-4">
+          <label for="inputVeic" class="form-label"><strong>Veículo:</strong></label>
+          <input type="text" class="form-control" id="inputVeic" 
+            value="<%= weighing.vehicle.plate %>" disabled>
+      </div>
+      <div class="col-md-4">
+          <label for="inputDh" class="form-label"><strong>Data e Hora:</strong></label>
+          <input type="text" class="form-control" id="inputDh" 
+            value="<%= weighing.dia.strftime("%d/%m/%Y -") %><%= weighing.hora.strftime(" %H:%M") %>" disabled>
+      </div>
+      <div class="col-md-4">
+          <label for="inputPesoe" class="form-label"><strong>Peso Entrada:</strong></label>
+          <input type="text" class="form-control" id="inputPesoe" 
+            value="<%= weighing.weight_in.to_s.gsub('.', ',') %>" disabled>
+      </div>
+      <div class="col-md-4">
+          <label for="inputPesos" class="form-label"><strong>Peso Saída:</strong></label>
+          <input type="text" class="form-control" id="inputPesos" 
+            value="<%= weighing.weight_out.to_s.gsub('.', ',') %>" disabled>
+      </div>
+      <div class="col-md-4">
+          <label for="inputPesol" class="form-label"><strong>Peso Líquido:</strong></label>
+          <input type="text" class="form-control" id="inputPesol" 
+          value="<% if (weighing.weight_in <= weighing.weight_out) %><%= (weighing.weight_out - weighing.weight_in).to_s.gsub('.', ',') %>
+          <% else %><%= (weighing.weight_in - weighing.weight_out).to_s.gsub('.', ',') %><% end %>" disabled>
+      </div>
+      <div class="col-md-8">
+        <strong>Imagem do Cupom:</strong>
+        <%= image_tag weighing.coupon, class: "img-fluid card-img-bottom" %>
+      </div>
+    </div>
+  </div>
 </div>
